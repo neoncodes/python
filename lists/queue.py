@@ -2,25 +2,25 @@ class Node:
     def __init__(self, value, nextNode):
         self.value = value
         self.nextNode = nextNode
-class Stack:
+class Queue:
     def __init__(self, head):
         self.head = Node(head, None)
 
     # Pop/Push
 
-    def pop(self):
+    def delete(self):
         self.head = self.head.nextNode
         
         return True
         
-    def push(self, val):
+    def add(self, val):
         temp = self.head
         if temp.nextNode:
-            self.head.nextNode = Node(temp.value, temp.nextNode)
-            self.head.value = val
+            while temp.nextNode:
+                temp = temp.nextNode
+            temp.nextNode = Node(val, None)
         else:
-            self.head.nextNode = Node(temp.value, None)
-            self.head.value = val
+            self.head.nextNode = Node(val, None)
 
         return True
             
@@ -43,9 +43,9 @@ class Stack:
             temp = temp.nextNode
         return s
 
-lStack = Stack("A")
-lStack.push("B")
-lStack.push("C")
-lStack.pop()
+lStack = Queue("A")
+lStack.add("B")
+lStack.add("C")
+lStack.delete()
 print(lStack.print())
 print(lStack.size())
