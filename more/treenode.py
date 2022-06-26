@@ -1,16 +1,10 @@
-from asyncio.windows_events import NULL
-from re import L
-
-from regex import R
-
-
 class TreeNode:
 
 # Init
 
     def __init__(self, val):
-        self.rchild = NULL
-        self.lchild = NULL
+        self.rchild = None
+        self.lchild = None
         self.value = val
 
 # Getters
@@ -37,3 +31,33 @@ class TreeNode:
     def addright(self, val):
         self.rchild = val
         return True
+
+    def print(self):
+        return str(self.value)+":"+str(self.lchild)+":"+str(self.rchild)
+
+# Tree
+
+class BinaryTree():
+    def __init__(self):
+        self.head = None
+        self.size = 0
+        # starts with no head
+         
+    def addRootNode(self, root):
+        self.head = TreeNode(root)
+        self.size = 1
+        # makes head a tree node
+
+    def addNode(self, node, val):
+        if val > node.value:
+            node.rchild = val
+            # if the child is > parent then right
+        else:
+            node.lchild = val
+            # else left
+
+        self.size += 1
+        # size increased
+
+    def print(self):
+        # for tmr
