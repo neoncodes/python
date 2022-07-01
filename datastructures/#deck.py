@@ -1,5 +1,4 @@
-from mimetypes import init
-
+# Second Time
 
 class Card:
     def __init__(self, suit, card):
@@ -37,8 +36,8 @@ class Deck:
     def print(self):
         for x in range(51):
             print(str(self.deck[x].card)+" of "+self.deck[x].suit,end="\n")
-    def shuffle(self):
-        shuff
+    #def shuffle(self):
+    #    shuff
 
 deck1 = Deck()
 print(deck1.print())
