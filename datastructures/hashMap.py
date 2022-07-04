@@ -1,10 +1,16 @@
-from datastructures.linkedList import LinkedList
+from linkedList import LinkedList
 
 
 class HashMap:
     def __init__(self):
-        self.keyList = [LinkedList()] * 1
-        self.itemList = [LinkedList()] * 1
+        self.keyList = [None] * 128 
+        self.itemList = [None] * 128 
+
+        for x in range(128):
+            self.keyList[x] = LinkedList()
+            
+        for x in range(128):
+            self.itemList[x] = LinkedList()
 
     def set(self, key, item):
         i = hash(key) % len(self.keyList)
@@ -54,6 +60,7 @@ class HashMap:
 
     def get(self, key):
         i = hash(key) % len(self.keyList)
+
         temp = self.keyList[i].head
         x = 0
         while temp:
@@ -70,10 +77,32 @@ class HashMap:
             temp = temp.nextNode
         return temp.value
 
+    def resize(self):
+        newSize = len(self.keyList)*2
+        newKList = [None]*newSize
+        newIList = [None]*newSize
+
+        for x in range(newSize//2):
+            if self.keyList[x].head:
+                i = hash(self.keyList[x].head.value) % newSize
+                newIList[i] = self.itemList[x]
+                newKList[i] = self.keyList[x]
+        for x in range(newSize):
+            if not newKList[x] and not newIList[x]:
+                newKList[x] = LinkedList()
+                newIList[x] = LinkedList()
+
+        self.keyList = newKList
+        self.itemList = newIList
+        
+
+
     def __repr__(self):
         array = []
         for x, y in zip(self.keyList, self.itemList):
-            if not x.head.nextNode and not y.head.nextNode:
+            if not x.head or not y.head:
+                continue
+            elif not x.head.nextNode and not y.head.nextNode:
                 array.append(f"{x.head.value}:{y.head.value}")
             else:
                 x = x.head
@@ -92,6 +121,8 @@ m.set("charley", "yoyasdfu")
 m.set("charley", "hi")
 m.set("adfh", "adtgfg")
 m.set("dfhgj", "dfdf")
-m.set("werwer", "werewr")
-m.delete("werwer")
+m.resize()
+print(m.get('charley'))
+print(m.get('adfh'))
+print(m.get('dfhgj'))
 print(m)

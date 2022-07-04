@@ -27,7 +27,7 @@ class LinkedList:
         while temp.nextNode:
             temp = temp.nextNode
             string += ", " + str(temp.value)
-        return string
+        return f"<{string}>"
 
     def size(self):
         return self.size
