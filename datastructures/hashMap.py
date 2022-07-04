@@ -2,14 +2,12 @@ from linkedList import LinkedList
 
 
 class HashMap:
-    def __init__(self):
-        self.keyList = [None] * 128 
-        self.itemList = [None] * 128 
+    def __init__(self, size=128):
+        self.keyList = [None] * size
+        self.itemList = [None] * size
 
-        for x in range(128):
+        for x in range(size):
             self.keyList[x] = LinkedList()
-            
-        for x in range(128):
             self.itemList[x] = LinkedList()
 
     def set(self, key, item):
@@ -79,21 +77,19 @@ class HashMap:
 
     def resize(self):
         newSize = len(self.keyList)*2
-        newKList = [None]*newSize
-        newIList = [None]*newSize
-
+        TempHash = HashMap(newSize)
         for x in range(newSize//2):
-            if self.keyList[x].head:
-                i = hash(self.keyList[x].head.value) % newSize
-                newIList[i] = self.itemList[x]
-                newKList[i] = self.keyList[x]
-        for x in range(newSize):
-            if not newKList[x] and not newIList[x]:
-                newKList[x] = LinkedList()
-                newIList[x] = LinkedList()
-
-        self.keyList = newKList
-        self.itemList = newIList
+            if self.keyList[x]:
+                if self.keyList[x].head:
+                    temp = self.keyList[x].head
+                    iTemp = self.itemList[x].head
+                    while temp.nextNode:
+                        TempHash.set(temp.value, iTemp.value)
+                        temp = temp.nextNode
+                        iTemp = iTemp.nextNode
+                    TempHash.set(temp.value, iTemp.value)
+        self = TempHash
+                        
         
 
 
